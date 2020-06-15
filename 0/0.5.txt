@@ -1,0 +1,19 @@
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+palvelin --> selain: HTML file
+selain -> palvelin: HTTP GET  https://fullstack-exampleapp.herokuapp.com/main.css
+palvelin --> selain: CSS file
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa.js
+palvelin --> selain: javascript file
+
+note over selain:
+selain lataa javascript filen, joka tekee json data kutsun.
+Selain rupeaa renderöimään sivulle tavaraa.
+note end
+
+selain -> palvelin: https://fullstack-exampleapp.herokuapp.com/data.json
+palvelin --> selain: json data
+
+note over selain:
+data laukaisee tapahtuman kuuntelijan, jonka jälkeen selain rupeaa piirtämään json datan mukaan
+asioita näytölle
+note end

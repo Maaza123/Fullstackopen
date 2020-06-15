@@ -1,0 +1,20 @@
+selain -> palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_route
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+palvelin --> selain: HTML koodi
+selain -> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+palvelin --> selain: CSS koodi
+selain -> palvelin:HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+palvelin --> selain: javascript koodi
+
+note over selain:
+Selain suorittaa javascript koodin, joka pyytä JSON datan palvelimelta.
+end note
+
+selain-> palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+palvelin --> selain: JSON data
+
+note over selain:
+selain suorittaa tapahtumankäsittelijän
+joka renderöi muistiinpanot näytölle
+end note
+

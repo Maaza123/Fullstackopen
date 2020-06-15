@@ -1,0 +1,8 @@
+selain -> palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+payload: content: "asdf"
+	 date: "2020-06-15T09:58:51.698Z"
+palvelin --> selain: message: noted created
+
+note over selain:
+Selain hakee uuden JSON datan ja renderöi näytölle tekstin
+note end

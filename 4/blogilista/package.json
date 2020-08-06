@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "run": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "eslint": "eslint .",
+    "fix": "eslint . --fix"
   },
   "author": "Matti Tuomela",
   "license": "ISC",
@@ -18,6 +20,7 @@
     "mongoose": "^5.9.27"
   },
   "devDependencies": {
+    "eslint": "^7.6.0",
     "nodemon": "^2.0.4"
   }
 }

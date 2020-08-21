@@ -6,7 +6,6 @@ const initialBlogs = helper.initialBlogs;
 const app = require('../app.js');
 
 const Blog = require('../models/blogs.js');
-const User = require('../models/users.js');
 
 
 const api = supertest(app);

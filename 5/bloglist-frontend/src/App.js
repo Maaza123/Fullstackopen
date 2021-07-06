@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef} from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Blogform from './components/Blogform'
+import Togglable from './components/Togglable'
 import './App.css'
 
 const ErrorPop = ({message}) => {
@@ -40,13 +42,18 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [message, setMessage] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
 
+  const blogFormRef = useRef()
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    blogService.getAll().then(blogs =>{
+      blogs.sort((a,b) =>{
+        return b.likes - a.likes ;
+      })
       setBlogs( blogs )
+
+    }
+      
+      
     )  
   }, [])
   
@@ -63,23 +70,32 @@ const App = () => {
     window.localStorage.removeItem('user');
     setUser(null);  
   }
+  const removeBlog = async(blog) =>{
+    const newBlogs = [...blogs];
+    const indexToRemove = newBlogs.findIndex((item) =>{
+      return item.id === blog.id;
+    })
+    newBlogs.splice(indexToRemove,1);
+    console.log(indexToRemove);
+    newBlogs.sort((a,b) => {
+      return b.likes - a.likes;
+    })
+    setBlogs(newBlogs);
 
-  const createBlog = async (event) => {
-    event.preventDefault();
-    try{
-      const response = await blogService.create({
-        title, author, url  
-      })
-      const newBlogs = blogs.concat(response);
-      setBlogs(newBlogs);
-      setAuthor('');
-      setTitle('');
-      setUrl('');
-      handleMessagePop(`Created new blog`)
-    }catch(error){
-      const stringified = JSON.stringify(error.response.data);
-      handleErrorPop(stringified);
-    }
+  }
+  const addBlog = async (blog) => {
+    const newBlogs = blogs.concat(blog);
+    setBlogs(newBlogs);
+  }
+  const modifyLikes = async(blog) => {
+    console.log("blog.id: ", blog.id);
+    const blogToChange = blogs.find(b => b.id === blog.id);
+    const changedBlog = {...blogToChange, likes: blog.likes};
+    const newBlogs = blogs.map((b => b.id !== blog.id ? b : changedBlog));
+    newBlogs.sort((a,b) =>{
+      return b.likes - a.likes ;
+    })
+    setBlogs(newBlogs);
   }
   const handleErrorPop = (error) => {
     setErrorMessage(error);
@@ -119,42 +135,14 @@ const App = () => {
     <div>
       <RenderName user={user} onClick={handleLogout}/>
       <br/>
-      <form onSubmit={createBlog}>
-        <div>
-          Title:
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({target}) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          Author:
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({target}) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          Url:
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({target}) => setUrl(target.value)}
-          />
-        </div>
-        
-      <button type="submit">Create</button>
-
-      </form>
       <br/>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} modifyLikes={modifyLikes} blog={blog} removeBlog={removeBlog}/>
       )}
+      <Togglable buttonLabel='Add new' ref={blogFormRef}>
+        <Blogform addBlog={addBlog} handleErrorPop={handleErrorPop}/>
+      </Togglable>
+      
     </div>
   )
 

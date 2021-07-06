@@ -17,5 +17,30 @@ const create = async (newBlog) => {
   return response.data;
 
 }
+const addLike = async (blog) => {
+  try{
+    console.log(blog);
+  const url = `${baseUrl}/${blog.id}`;
+  console.log('url: ',  url)
+  blog.likes = blog.likes + 1;
+  const response = await axios.put(url, blog);
+  return response;
+  }catch(error){
+    return error;
+  }
+  
+  
+}
 
-export default { getAll, setToken, create}
+const deleteBlog = async (id) => {
+  const url = `${baseUrl}/${id}`;
+  const config = {
+    headers: { Authorization: token}
+  }
+  try{
+    return await axios.delete(url, config); 
+  }catch(error){
+    return(error);
+  }
+}
+export default { getAll, setToken, create, addLike, deleteBlog};

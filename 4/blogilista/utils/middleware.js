@@ -31,9 +31,10 @@ const errorHandler = (error, request, response, next) => {
 	next(error);
 };
 const validateToken = async (request, response, next) => {
+	
 	const token = request.token;
 	if(!token){
-		return response.status(401).json({error: 'token missing or invalid.'});
+		return response.status(401).json({error: 'token missing'});
 	}
 	const decodedToken = await tokenAuth.verify(token);
 

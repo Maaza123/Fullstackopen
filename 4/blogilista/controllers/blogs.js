@@ -33,14 +33,18 @@ blogRouter.post('/', middleWare.validateToken, async (request, response) => {
 blogRouter.delete('/:id', middleWare.validateToken, async (request, response) => {
 	const token = request.token;
 	const blog = await Blog.findById(request.params.id);
+	console.log(blog);
 
-	if(!blog){
+	if(blog === undefined){
+		console.log('no blog found');
 		return response.status(404).end();
 	}
+	console.log('blog user: ' + blog.user);
+	console.log('token id: ' + token.id );
 	if(blog.user.toString() !== token.id.toString()){
-		return response.status(403).json({error: 'token missing or invalid.'});
+		return response.status(403).json({error: 'You can only delete your own blogs.'});
 	}
-	
+	console.log(request.params.id);
 	await Blog.findByIdAndDelete(request.params.id);
 	response.status(204).end();
 });

@@ -19,13 +19,13 @@ const deleteBlog = async(blog, removeBlog) => {
 
 };
 const Blog = ({ blog, addLikes, removeBlog }) => (
-  <div class="blog">
+  <div className="blog">
     {blog.title}
     <Togglable class='moreInfoButton' buttonLabel="More info">
       <ul>
         <li>{blog.url}</li>
 
-        <li>likes {blog.likes} <button class='likeButton' onClick={() => addLikes(blog) }>like</button></li>
+        <li>likes {blog.likes} <button className='likeButton' onClick={() => addLikes(blog) }>like</button></li>
         <li>{blog.author}</li>
       </ul>
       <button onClick={() => deleteBlog(blog, removeBlog)}>Delete blogs</button>
@@ -40,5 +40,5 @@ const Blog = ({ blog, addLikes, removeBlog }) => (
 
 Togglable.propTypes = {
   buttonLabel : PropTypes.string.isRequired
-}
+};
 export default Blog;

@@ -1,3 +1,7 @@
 node_modules
 build
 .eslintrc.js
+blog_app.spec.js
+Blog.test.js
+Blogform.test.js
+cypress

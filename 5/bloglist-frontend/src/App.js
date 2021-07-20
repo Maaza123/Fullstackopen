@@ -97,7 +97,7 @@ const App = () => {
       const stringified = JSON.stringify(error.response.data);
       handleErrorPop(stringified);
     }
-    
+
   };
   const addLikes = async(blog) => {
     try{
@@ -107,13 +107,13 @@ const App = () => {
       const changedBlog = { ...blogToChange, likes: blog.likes };
       const newBlogs = blogs.map((b => b.id !== blog.id ? b : changedBlog));
       newBlogs.sort((a,b) => {
-      return b.likes - a.likes ;
-    });
-    setBlogs(newBlogs);
+        return b.likes - a.likes ;
+      });
+      setBlogs(newBlogs);
     }catch(error){
-
+      console.log(error);
     }
-    
+
   };
   const handleErrorPop = (error) => {
     setErrorMessage(error);
@@ -157,7 +157,7 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id} addLikes={addLikes} blog={blog} removeBlog={removeBlog}/>
       )}
-      <Togglable id ='addBlog' buttonLabel='Add new' ref={blogFormRef}>
+      <Togglable  buttonLabel='Add new' ref={blogFormRef}>
         <Blogform addBlog={addBlog}/>
       </Togglable>
 
@@ -168,33 +168,33 @@ const App = () => {
   const formView = () => (
     <div>
       <form onSubmit={handleLogin} id='loginForm'>
-    <div>
+        <div>
           username
-      <input
-        type="text"
-        value={username}
-        name="Username"
-        id="username"
-        onChange={({ target }) => setUsername(target.value)}
-      />
-    </div>
-    <div>
+          <input
+            type="text"
+            value={username}
+            name="Username"
+            id="username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
           password
-      <input
-        type="text"
-        value={password}
-        name="password"
-        id="password"
-        onChange={({ target }) => setPassword(target.value)}
-      />
-    </div>
-    <button type="submit" id="loginButton">login</button>
-  </form>
+          <input
+            type="text"
+            value={password}
+            name="password"
+            id="password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit" id="loginButton">login</button>
+      </form>
       <Togglable buttonLabel='Register' ref={registerFormRef}>
         <RegisterForm handleErrorPop={handleErrorPop}/>
       </Togglable>
     </div>
-    
+
   );
 
 

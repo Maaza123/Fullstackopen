@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 
-const Blogform = ({ addBlog}) => {
+const Blogform = ({ addBlog }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
-  
+
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     addBlog({
       'title':title,
       'author': author,
-      'url': url});
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-  }
+      'url': url });
+    setTitle('');
+    setAuthor('');
+    setUrl('');
+  };
   return(<form onSubmit={handleSubmit} id="form">
     <div>
           Title:

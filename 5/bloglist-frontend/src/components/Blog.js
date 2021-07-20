@@ -1,45 +1,44 @@
-import React from 'react'
-import Togglable from './Togglable'
-import blogService from '../services/blogs'
-const handleButtonClick = async (blog, modifyLikes) => {
+import React from 'react';
+import Togglable from './Togglable';
+import BlogService from '../services/blogs';
+import PropTypes from 'prop-types';
+
+const deleteBlog = async(blog, removeBlog) => {
   try{
-    const response = await blogService.addLike(blog);
-    modifyLikes(response);
-  }catch(error){
-    console.log(error);
-  }
-}
-const deleteBlog = async(blog, removeBlog) =>{
-  try{
-    const response = await blogService.deleteBlog(blog.id);
-    console.log(response);
-    if(response.status === 204){
-       await removeBlog(blog);
-    } 
+    if(window.confirm(`Are you sure you want to remove blog ${blog.title}?`)){
+      const response = await BlogService.deleteBlog(blog.id);
+      console.log(response);
+      if(response.status === 204){
+        removeBlog(blog);
+      }
+    }
   }catch(error){
     return error;
   }
-  
 
-}
-const Blog = ({ props, blog, modifyLikes, removeBlog }) => (
-  <div>
+
+};
+const Blog = ({ blog, addLikes, removeBlog }) => (
+  <div class="blog">
     {blog.title}
-    <Togglable buttonLabel='show more'>
+    <Togglable class='moreInfoButton' buttonLabel="More info">
       <ul>
         <li>{blog.url}</li>
 
-        <li>likes {blog.likes} <button  onClick={() => handleButtonClick(blog, modifyLikes)}>like</button></li>
+        <li>likes {blog.likes} <button class='likeButton' onClick={() => addLikes(blog) }>like</button></li>
         <li>{blog.author}</li>
       </ul>
       <button onClick={() => deleteBlog(blog, removeBlog)}>Delete blogs</button>
 
-      
-      
-        
-      
+
+
+
+
     </Togglable>
   </div>
-)
+);
 
-export default Blog
+Togglable.propTypes = {
+  buttonLabel : PropTypes.string.isRequired
+}
+export default Blog;

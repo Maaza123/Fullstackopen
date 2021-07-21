@@ -72,4 +72,4 @@ export const newAnectode = (anecdote) => {
   }
 }
 
-export default anecdoteReducer
+export default anecdoteReducer;

@@ -12,7 +12,7 @@ const AnectodeForm = () => {
         const data = event.target.anecdote.value;
         console.log(data);
         dispatch(newAnectode(data));
-        setNewNotification(dispatch, `You added: ${data}`)
+        dispatch(setNewNotification(`You added: ${data}`, 5000));
         event.target.anecdote.value = '';
       }
 

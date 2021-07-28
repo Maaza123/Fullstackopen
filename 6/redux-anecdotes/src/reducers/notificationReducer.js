@@ -16,22 +16,19 @@ const notificationReducer = (state=initialState, action ) => {
 }
 
 let nextId = 0;
-const setNotification =(notification, id)=> {
-    return({
-        type: 'SET_NOTIFICATION',
-        data: {notification,id}
-    })
-}
-const zero = (id) => {
-    return ({
-        type: 'ZERO',
-        data:{id}        
-    })
-}
-export const setNewNotification = (dispatch, notification) => {
-    const id = nextId++;
-    console.log(nextId);
-    dispatch(setNotification(notification, id));
-    setTimeout(() => dispatch(zero(id)), 5000);
+export const setNewNotification = (notification, time) => {
+    return async dispatch => {
+        const id = nextId++;
+        console.log(nextId);
+        dispatch({
+            type: 'SET_NOTIFICATION',
+            data: {notification,id}
+        }); 
+        setTimeout(() => dispatch({
+            type: 'ZERO',
+            data: {notification, id}
+        }), time);
+    }
+    
 }
 export default notificationReducer;

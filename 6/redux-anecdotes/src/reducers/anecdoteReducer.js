@@ -1,3 +1,5 @@
+import anecdoteService from "../services/anecdotes"
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -25,26 +27,28 @@ const sortAnecdotes = (anectodes)=> {
 }
 const initialState = anecdotesAtStart.map(asObject)
 
-const anecdoteReducer = (state = initialState, action) => {
+const anecdoteReducer = (state = [], action) => {
   switch(action.type) {
     case 'LIKE':
-      const id = action.data.id;
-      const anectodeToChange = state.find(n => n.id === id);
-      const changedAnectode = {
-        ...anectodeToChange,
-        votes: anectodeToChange.votes+1
-      }
-      console.log(changedAnectode);
-      const anectodes = [...state];
-      const anectodesToSort = anectodes.map(anectode => 
-        anectode.id !== id ? anectode : changedAnectode
-      )
-      const sortedAnecdotes = sortAnecdotes(anectodesToSort);
-      return sortedAnecdotes;
 
-    case 'NEW_NOTE':
+      console.log('anecdote data:', action.data);
+      const unsorted = state.map(anectode => 
+        anectode.id !== action.data.id ? anectode : action.data
+      )
+      const anecdotes = [...unsorted]
+
+      const sorted = sortAnecdotes(anecdotes);
+      
+      
+      
+      return sorted;
+
+    case 'NEW_ANECDOTE':
       const newAnectode = action.data;
       return state.concat(newAnectode);
+
+    case 'INIT_ANECDOTES':
+      return state.concat(...action.data);
 
   }
   console.log('state now: ', state)
@@ -53,22 +57,51 @@ const anecdoteReducer = (state = initialState, action) => {
   return state
 }
 
-export const like = (id) =>{
-  console.log('liked');
-  return{
-    type: 'LIKE',
-    data:{id}
+export const like = (anecdote) =>{
+  return async dispatch => {
+    const id = anecdote.id
+    console.log('liked');
+      const changedAnectode = {
+        ...anecdote,
+        votes: anecdote.votes+1
+      }
+      const response = await anecdoteService.put(id, changedAnectode);
+      dispatch({
+        type: 'LIKE',
+        data: response
+      }) 
+
+  
   }
   
+  
 }
-export const newAnectode = (anecdote) => {
-  return{
-    type:'NEW_NOTE',
-    data:{
-      content: anecdote,
+export const newAnectode = (content) => {
+
+  return async dispatch => {
+    const anecdote = {
+      content: content,
       id: getId(),
       votes: 0
     }
+    const response = await anecdoteService.addAnectode(anecdote)
+    console.log('testi:', response)
+    dispatch({
+      type:'NEW_ANECDOTE',
+      data: response
+      
+    })  
+}}
+
+export const initAnecdotes = () => {
+  return async dispatch => {
+    
+    const anecdotes = await anecdoteService.getAll();
+    console.log('anecdotes::', anecdotes);
+    dispatch({
+      type: 'INIT_ANECDOTES',
+      data: anecdotes
+    })  
   }
 }
 

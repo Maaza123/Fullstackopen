@@ -16,13 +16,14 @@ const AnecdoteList = () => {
     })
     const dispatch = useDispatch();
 
-    const vote = (id) => {
-      dispatch(like(id));
-      const votedAnecdote = anecdotes.find(n=> n.id === id);
-      setNewNotification(dispatch, `You voted: ${votedAnecdote.content}`)
-      console.log('vote', id)
+    const vote = (anecdote) => {
+      dispatch(like(anecdote));
+      
+      dispatch(setNewNotification(`You voted: ${anecdote.content}`, 5000));
+      console.log('vote', anecdote.id)
 
     }
+
     return(
         <div>
         {anecdotes.map(anecdote =>
@@ -32,7 +33,7 @@ const AnecdoteList = () => {
                 </div>
             <div>
                 has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => vote(anecdote)}>vote</button>
             </div>
         </div>
       )}

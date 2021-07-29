@@ -3,17 +3,17 @@
     {
       "content": "test content",
       "id": 12345,
-      "votes": 35
+      "votes": 38
     },
     {
       "content": "jussi",
       "id": "61924",
-      "votes": 20
+      "votes": 21
     },
     {
       "content": "Testi",
       "id": "88019",
-      "votes": 17
+      "votes": 18
     },
     {
       "content": "",
@@ -43,6 +43,16 @@
     {
       "content": "JUSSI",
       "id": "65080",
+      "votes": 1
+    },
+    {
+      "content": "juhani",
+      "id": "2774",
+      "votes": 0
+    },
+    {
+      "content": "asd",
+      "id": "50920",
       "votes": 0
     }
   ]

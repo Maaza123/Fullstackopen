@@ -1,6 +1,5 @@
 const initialState = {
-    notification: '',
-    id: 0
+    notification: ''
 };
 
 const notificationReducer = (state=initialState, action ) => {
@@ -8,25 +7,21 @@ const notificationReducer = (state=initialState, action ) => {
         case 'SET_NOTIFICATION':
             return action.data;
         case 'ZERO':
-            if(action.data.id === state.id){
-                return initialState;
-            }
+            return initialState;
     }
     return state;
 }
 
-let nextId = 0;
+let id = 0;
 export const setNewNotification = (notification, time) => {
     return async dispatch => {
-        const id = nextId++;
-        console.log(nextId);
+        clearTimeout(id)
         dispatch({
             type: 'SET_NOTIFICATION',
-            data: {notification,id}
+            data: {notification}
         }); 
-        setTimeout(() => dispatch({
-            type: 'ZERO',
-            data: {notification, id}
+        id = setTimeout(() => dispatch({
+            type: 'ZERO'
         }), time);
     }
     

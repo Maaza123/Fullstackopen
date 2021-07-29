@@ -1,18 +1,16 @@
 import React from 'react';
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { newAnectode } from '../reducers/anecdoteReducer';
 import { setNewNotification } from '../reducers/notificationReducer';
 
-const AnectodeForm = () => {
-
-    const dispatch = useDispatch();
+const AnectodeForm = (props) => {
 
     const addAnectode = (event) => {
         event.preventDefault();
         const data = event.target.anecdote.value;
         console.log(data);
-        dispatch(newAnectode(data));
-        dispatch(setNewNotification(`You added: ${data}`, 5000));
+        props.newAnectode(data);
+        props.setNewNotification(`You added: ${data}`, 5000);
         event.target.anecdote.value = '';
       }
 
@@ -26,4 +24,9 @@ const AnectodeForm = () => {
         </div>
     )
 }
-export default AnectodeForm;
+
+const mapDispatchToProps = {
+    newAnectode, setNewNotification
+}
+
+export default connect(null, mapDispatchToProps)(AnectodeForm);

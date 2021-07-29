@@ -35,20 +35,17 @@ const anecdoteReducer = (state = [], action) => {
       const unsorted = state.map(anectode => 
         anectode.id !== action.data.id ? anectode : action.data
       )
-      const anecdotes = [...unsorted]
-
-      const sorted = sortAnecdotes(anecdotes);
       
       
       
-      return sorted;
+      return sortAnecdotes([...unsorted]);
 
     case 'NEW_ANECDOTE':
       const newAnectode = action.data;
       return state.concat(newAnectode);
 
     case 'INIT_ANECDOTES':
-      return state.concat(...action.data);
+      return sortAnecdotes(action.data);
 
   }
   console.log('state now: ', state)

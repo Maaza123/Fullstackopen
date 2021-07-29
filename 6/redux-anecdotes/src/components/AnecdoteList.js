@@ -23,16 +23,26 @@ const AnecdoteList = () => {
       console.log('vote', anecdote.id)
 
     }
+    const padding = {
+        'padding': 5,
+        'padding-left': 3,
+        'border-style': 'solid',
+        'border-width': 1
+    }
 
+    const text = {
+        fontFamily: 'Courier New',
+        fontSize: 15 
+    }
     return(
         <div>
         {anecdotes.map(anecdote =>
-            <div key={anecdote.id}>
-                <div>
+            <div style={padding} key={anecdote.id}>
+                <div style={text}>
                     {anecdote.content}
                 </div>
             <div>
-                has {anecdote.votes}
+                votes: {anecdote.votes}
             <button onClick={() => vote(anecdote)}>vote</button>
             </div>
         </div>

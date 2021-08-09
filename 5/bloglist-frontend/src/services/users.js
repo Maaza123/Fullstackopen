@@ -12,4 +12,22 @@ const registerUser = async ({ username, name, password }) => {
 
 };
 
-export default { registerUser };
+const getAll = async () => {
+  try{
+    const response = await axios.get(url);
+    return response.data;
+  }catch(error){
+    console.log(`${error}`)
+  }
+  
+}
+
+const getById = async (id) => {
+  const response = await axios.get(`${url}/${id}`);
+  console.log('found user:', response.data)
+  return response.data;
+}
+
+
+
+export default { registerUser, getAll, getById };

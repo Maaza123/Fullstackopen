@@ -30,6 +30,14 @@ blogRouter.post('/', middleWare.validateToken, async (request, response) => {
 
 	response.status(201).json(result);
 });
+
+blogRouter.post('/:id/comments', async(request, response) => {
+	const id = request.params.id;
+	const data = request.body.comment
+	const result = await Blog.findByIdAndUpdate(id, {$push: {'comments':data}}, {new:true} )
+	response.status(201).json(result);
+
+})
 blogRouter.delete('/:id', middleWare.validateToken, async (request, response) => {
 	const token = request.token;
 	const blog = await Blog.findById(request.params.id);

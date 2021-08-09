@@ -40,12 +40,18 @@ module.exports = {
         "object-curly-spacing": [
             "error", "always"
         ],
+        "default-case": 0,
         "arrow-spacing": [
             "error", { "before": true, "after": true }
         ],
         "no-console": 0,
         "react/prop-types": 0
     },
+    "overrides": [{
+        "rules":{
+            "default-case": 0
+        }}
+    ],
     "settings": {
       "react": {
         "version": "detect"

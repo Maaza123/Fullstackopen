@@ -24,13 +24,25 @@ const addLike = async (blog) => {
     console.log('url: ',  url);
     blog.likes = blog.likes + 1;
     const response = await axios.put(url, blog);
-    return response;
+    console.log('service:',response);
+    return response.data;
   }catch(error){
     return error;
   }
 
 
 };
+
+const addComment = async(id, comment) => {
+  try{
+    const url = `${baseUrl}/${id}/comments`;
+    console.log(comment)
+    const response = await axios.post(url, {comment});
+    return response.data;
+  }catch(error){
+    return error
+  }
+}
 
 const deleteBlog = async (id) => {
   const url = `${baseUrl}/${id}`;
@@ -43,4 +55,4 @@ const deleteBlog = async (id) => {
     return(error);
   }
 };
-export default { getAll, setToken, create, addLike, deleteBlog };
+export default { getAll, setToken, create, addLike, deleteBlog, addComment };

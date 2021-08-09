@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
-
-const LoginForm = ({
-  handleLogin
-}) => {
+import { useDispatch } from 'react-redux';
+import {login} from '../reducers/userReducer'
+import { useHistory } from 'react-router';
+const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const handlePasswordChange = (target) => {
-    setPassword(target.value);
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    dispatch(login({username, password}))
+    setUsername('');
+    setPassword('');
 
-  const handleNameChange = (target) => {
-    setUsername(target.value);
   };
   return (
-    <form onSubmit={handleLogin()} id='loginForm'>
+    <div>
+      <h1>Login:</h1>
+      <form onSubmit={handleSubmit} id='loginForm'>
       <div>
             username
         <input
           type="text"
           value={username}
           name="Username"
-          onChange={handleNameChange}
+          onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
@@ -30,11 +34,13 @@ const LoginForm = ({
           type="text"
           value={password}
           name="password"
-          onChange={handlePasswordChange}
+          onChange={({ target }) => setPassword(target.value)}
         />
       </div>
       <button type="submit">login</button>
     </form>
+    </div>
+    
   );
 };
 
